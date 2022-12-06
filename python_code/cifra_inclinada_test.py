@@ -7,7 +7,7 @@ cripto.descriptografa("mnes__ya_____mi", 3)
 setup = """
 import cifra_inclinada as cripto
 """
-tempo = timeit.timeit(statement, setup, number=1)
+tempo = timeit.timeit(statement, setup, number=10) / 10
 print(f"\n {tempo} segundos")
 print()
 print("Teste 2 - Frase longa")
@@ -17,7 +17,7 @@ cripto.descriptografa("nhrols_inpaoossnsmmo____aaare_adaarrn_icaeos____ov_bts_ao
 setup = """
 import cifra_inclinada as cripto
 """
-tempo = timeit.timeit(statement, setup, number=1)
+tempo = timeit.timeit(statement, setup, number=10) / 10
 print(f"\n {tempo} segundos")
 print()
 print("Teste 3 - Frase muito longa")
@@ -27,7 +27,7 @@ cripto.descriptografa("pihsr_aupigemo_e__iosepazvesdapm______amoatoseosa__rmssda
 setup = """
 import cifra_inclinada as cripto
 """
-tempo = timeit.timeit(statement, setup, number=1)
+tempo = timeit.timeit(statement, setup, number=10) / 10
 print(f"\n {tempo} segundos")
 
 
