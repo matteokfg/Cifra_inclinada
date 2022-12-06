@@ -28,6 +28,7 @@ def decodeString(encodedString, numberOfRows):
         except:
             pass
         break
+    print()
 
 def descriptografa(encodedString, numberOfRows):
     if validate_decodeString(encodedString, numberOfRows):
