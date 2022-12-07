@@ -1,12 +1,12 @@
 # Cifra_inclinada
 
-##Como rodar o programa em Python?
+## Como rodar o programa em Python?
 
 No cmd, escreva:
 -´python cifra_inclinada.py´
 -´python cifra_inclinada_test.py´
 
-##Como rodar o programa em Elixir?
+## Como rodar o programa em Elixir?
 
 No cmd, escreva:
 -´elixir cifra_inclinada.ex´
