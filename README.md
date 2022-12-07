@@ -3,15 +3,16 @@
 ## Como rodar o programa em Python?
 
 No cmd, escreva:
--´python cifra_inclinada.py´
--´python cifra_inclinada_test.py´
+- ```python cifra_inclinada.py```
+- ```python cifra_inclinada_test.py```
 
 ## Como rodar o programa em Elixir?
 
 No cmd, escreva:
--´elixir cifra_inclinada.ex´
+- ```elixir cifra_inclinada.ex```
+
 Para fazer os testes, eu utilizei o Mix do Elixir, que é uma ferramenta de construção que fornece tarefas para criar, compilar e testar projectos Elixir, gerir as suas dependências, dentre outros. Então, para testar, escreva no cmd:
--´mix test´
+- ```mix test```
 
 # Python Vs Elixir
 ![exercicio_cifra (4)](https://user-images.githubusercontent.com/67129306/206177231-e9dc8d3b-f25b-42c9-a04c-12cad3fc8757.PNG)
