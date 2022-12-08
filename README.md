@@ -27,10 +27,6 @@ Tendo feito as duas, qual seria a mais rápida? Para achar a resposta, usei trê
 
 Observação: as duas últimas frases peguei da internet no site: https://www.pensador.com/, apenas retirei a acentuação, letras maiúsculas e a pontuação, porque o programa só aceita letras e o underline.
 
-## Condições dos Testes
-
-Antes de rodar os testes, reiniciei o computador para tentar prevenir, o máximo possível, que processos em segundo plano atrapalhassem a cronometragem.
-
 ## Teste do Python
 
 Para medir o tempo de execução do programa em Python, utilizei da biblioteca Timeit, a função timeit.timeit(), passando o algoritmo em Python, com a frase criptografada e o número de linhas da matriz, junto com o número de vezes para se repetir a execução do algoritmo. Dessa forma, evitando estatisticamente contar tempo que não foi utilizado para a execução do algoritmo pela CPU do computador, devido o fato de se rodar várias vezes o mesmo programa e somar os tempos, depois só sendo necessário dividir o tempo retornado pelo número de vezes que o algoritmo foi executado, para se achar o tempo de uma execução. Retornando o tempo em segundos.
