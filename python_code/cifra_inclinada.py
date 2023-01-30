@@ -6,6 +6,7 @@ def validate_decodeString(encodedString, numberOfRows):
             return False
     else:
         print("Algo deu errado!")
+        return False
 
 def decodeString(encodedString, numberOfRows):
     matriz = [["_" for i in range(int(len(encodedString)/numberOfRows))] for i in range(numberOfRows)]
