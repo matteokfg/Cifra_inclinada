@@ -24,7 +24,7 @@ def decodeString(encodedString, numberOfRows):
     while True:
         try:
             for el in range(int((len(encodedString)/numberOfRows) - 1)): # roda a quantidade de diagonais lidas, sendo equivalente ao numberOfRows de colunas menos 1, caso de erro fora de indice na ultima letra tem o try e except
-                for i in contador: # roda as 3 linhas
+                for i in contador: # roda as X linhas
                     print(matriz[i][i+el], end='')
         except:
             pass
