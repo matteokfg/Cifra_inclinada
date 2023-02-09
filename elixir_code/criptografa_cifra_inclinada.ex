@@ -105,7 +105,3 @@ defmodule Cripto do
     end
   end
 end
-
-Cripto.criptografa("my name is", 3)
-
-Cripto.criptografa("matteo e inteligentef", 4)
