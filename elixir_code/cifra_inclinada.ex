@@ -1,4 +1,4 @@
-defmodule Cripto do
+defmodule DeCripto do
   @moduledoc """
   Dentro desse modulo, existem todas as funcoes necessarias para a quebra da criptografia, utilizanddo matriz inclinada.
   """
@@ -13,7 +13,7 @@ defmodule Cripto do
 
   ## Exemplo
 
-    iex>Cripto.replace_all([0,1,2,3,4,5,0,1,2,3,4,5], 2, 44)
+    iex>DeCripto.replace_all([0,1,2,3,4,5,0,1,2,3,4,5], 2, 44)
     [0,1,44,3,4,5,0,1,44,3,4,5]
 
   """
@@ -35,10 +35,10 @@ defmodule Cripto do
 
   ## Exemplo
 
-    iex>Cripto.validate_decodeString("mnes__ya_____mi", 3)
+    iex>DeCripto.validate_decodeString("mnes__ya_____mi", 3)
     :true
 
-    iex>Cripto.validate_decodeString("mnes__y_a_____mi5", 4)
+    iex>DeCripto.validate_decodeString("mnes__y_a_____mi5", 4)
     Algo deu errado
     :false
 
@@ -67,14 +67,14 @@ defmodule Cripto do
 
   ## Exemplo
 
-    iex>Cripto.popula_matriz(["m","n","e","s","_","_","y","a","_","_","_","_","_","m","i"], 3)
+    iex>DeCripto.popula_matriz(["m","n","e","s","_","_","y","a","_","_","_","_","_","m","i"], 3)
     [["m","n","e","s"," "],
      [" ","y","a"," "," "],
      [" "," "," ","m","i"]]
   """
 
   def popula_matriz(frase, numberOfRows) do
-    frase_s_underline = Cripto.replace_all(frase, 95, 32) #95 eh o unicode de "_", e 32 eh o unicode de " "
+    frase_s_underline = DeCripto.replace_all(frase, 95, 32) #95 eh o unicode de "_", e 32 eh o unicode de " "
     Enum.chunk_every(frase_s_underline, div(length(frase), numberOfRows))
   end
 
@@ -88,7 +88,7 @@ defmodule Cripto do
 
   ## Exemplo
 
-    iex>Cripto.read_dig("mnes__ya_____mi", 3, [["m","n","e","s","_"],["_","y","a","_","_"],["_","_","_","m","i"]])
+    iex>DeCripto.read_dig("mnes__ya_____mi", 3, [["m","n","e","s","_"],["_","y","a","_","_"],["_","_","_","m","i"]])
     my name is
     Parabens, vc conseguiu!
 
@@ -120,15 +120,15 @@ defmodule Cripto do
 
   ## Exemplo
 
-    iex>Cripto.decodeString("mnes__ya_____mi", 3)
+    iex>DeCripto.decodeString("mnes__ya_____mi", 3)
     my name is
     Parabens, vc conseguiu!
   """
 
   def decodeString(encodedString, numberOfRows) do
     frase = String.to_charlist(encodedString)
-    matriz = Cripto.popula_matriz(frase, numberOfRows)
-    Cripto.read_dig(encodedString, numberOfRows, matriz)
+    matriz = DeCripto.popula_matriz(frase, numberOfRows)
+    DeCripto.read_dig(encodedString, numberOfRows, matriz)
   end
 
   @doc """
@@ -140,17 +140,17 @@ defmodule Cripto do
 
     ## Exemplo
 
-      iex>Cripto.descriptografa("mnes__ya_____mi", 3)
+      iex>DeCripto.descriptografa("mnes__ya_____mi", 3)
       my name is
       Parabens, vc conseguiu!
 
-      iex>Cripto.descriptografa("mnes__y_a_____mi5", 4)
+      iex>DeCripto.descriptografa("mnes__y_a_____mi5", 4)
       Algo deu errado
     """
 
   def descriptografa(encodedString, numberOfRows) do
-    if Cripto.validate_decodeString(encodedString, numberOfRows) do
-      Cripto.decodeString(encodedString, numberOfRows)
+    if DeCripto.validate_decodeString(encodedString, numberOfRows) do
+      DeCripto.decodeString(encodedString, numberOfRows)
     end
   end
 end
