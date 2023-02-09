@@ -3,21 +3,21 @@ defmodule CriptoTest do
 
   test "crptografia" do
     inicio = Time.utc_now()
-    Cripto.descriptografa("mnes__ya_____mi", 3)
+    DeCripto.descriptografa("mnes__ya_____mi", 3)
     fim = Time.utc_now()
     tempo = Time.diff(fim, inicio, :microsecond)
     IO.puts("#{tempo} microssegundos")
 
 
     inicio = Time.utc_now()
-    Cripto.descriptografa("nhrols_inpaoossnsmmo____aaare_adaarrn_icaeos____ov_bts_aos__gelistre_____eboaev__spla_eo_afs", 4)
+    DeCripto.descriptografa("nhrols_inpaoossnsmmo____aaare_adaarrn_icaeos____ov_bts_aos__gelistre_____eboaev__spla_eo_afs", 4)
     fim = Time.utc_now()
     tempo = Time.diff(fim, inicio, :microsecond)
     IO.puts("#{tempo} microssegundos")
 
 
     inicio = Time.utc_now()
-    Cripto.descriptografa("pihsr_aupigemo_e__iosepazvesdapm______amoatoseosa__rmssda_unateo_ierr_______r_roas_nr_ssaaa_eossftrirnqn__ev______aaa_s_po_l_essiqjs_aieas_tutes_o_______ssc_desmoqj__oua_nocs_faaeosecc______m__ueiq_anuaheremda_i_sa_d__tmoe", 6)
+    DeCripto.descriptografa("pihsr_aupigemo_e__iosepazvesdapm______amoatoseosa__rmssda_unateo_ierr_______r_roas_nr_ssaaa_eossftrirnqn__ev______aaa_s_po_l_essiqjs_aieas_tutes_o_______ssc_desmoqj__oua_nocs_faaeosecc______m__ueiq_anuaheremda_i_sa_d__tmoe", 6)
     fim = Time.utc_now()
     tempo = Time.diff(fim, inicio, :microsecond)
     IO.puts("#{tempo} microssegundos")
