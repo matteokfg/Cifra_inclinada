@@ -96,7 +96,7 @@ defmodule Cripto do
   def codeString(string, numberOfRows) do
     {matrizFrase, frase} = Cripto.string_p_matrizFrase(string, numberOfRows)
     matriz = Cripto.melhora_matriz(matrizFrase, numberOfRows, frase)
-    IO.puts("\n -> Parabens conseguiu! Criptografando para: #{matriz}\n")                                                             # imprimo na tela a matriz, o IO.puts() ja vai transformar a a charlist em string e varias linha em uma linha
+    IO.puts("\n -> Parabens conseguiu! Criptografando para: #{matriz}\n")       # imprimo na tela a matriz, o IO.puts() ja vai transformar a a charlist em string e varias linha em uma linha
   end
 
   def criptografa(string, numberOfRows) do
