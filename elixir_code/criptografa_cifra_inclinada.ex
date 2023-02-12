@@ -45,6 +45,24 @@ defmodule Cripto do
     |> Enum.map(&Tuple.to_list/1)
   end
 
+  @doc """
+  Valida os parametros necessarios para a criptografia.
+
+  ## Parametros
+    - String: string crptografada.
+    - Numero: numero de linhas.
+
+  ## Exemplo
+
+    iex>Cripto.validate_string("my name is", 3)
+    :true
+
+    iex>Cripto.validate_string("my name is5", 4)
+    Algo deu errado
+    :false
+
+  """
+
   def validate_string(string, numberOfRows) do
     if (numberOfRows >= 1 and numberOfRows <= 2*(:math.pow(10,3))) and (String.length(string) >= 1 and String.length(string) <= 2*(:math.pow(10, 6))) do
       if String.valid?(string) or String.contains?(string,'_') do
@@ -59,15 +77,42 @@ defmodule Cripto do
     end
   end
 
+  @doc """
+  Transforma a string em uma lista de charlistas.
+
+  ## Parametros
+    - String: string a ser criptografada.
+    - Numero: numero de linhas.
+
+  ## Exemplo
+    iex>Cripto.string_p_matrizFrase("my name is", 3)
+    {[[109, 110, 101, 115], [121, 97, 95, 95], [95, 109, 105, 95]], [109, 121, 32, 110, 97, 109, 101, 32, 105, 115]}
+
+  """
+
   def string_p_matrizFrase(string, numberOfRows) do
     #---------- preparo a string ----------------------
     frase = String.to_charlist(string)                                          # transforma a string em uma lista de caracteres (char)
     frase_c_underline = Cripto.replace_all(frase, 32, 95)                       # substitui os espacos por underlines
     #--------- preparo a lista da string --------------
-    frase_modificada_em_matriz = Enum.chunk_every(frase_c_underline, numberOfRows, numberOfRows, List.duplicate("_", numberOfRows+1)) #div(length(frase),numberOfRows) # separo a lista em uma lsita de listas cada lista com numero de carateres igual ao numero de linhas, no final eh adicionado underlines falsos
+    frase_modificada_em_matriz = Enum.chunk_every(frase_c_underline, numberOfRows, numberOfRows, List.duplicate(95, numberOfRows+1)) # separo a lista em uma lista de listas cada lista com numero de carateres igual ao numero de linhas, no final eh adicionado underlines falsos
     matrizFrase = Cripto.transpose(frase_modificada_em_matriz)                  # coluna em linha e linha em coluna
     {matrizFrase, frase}
   end
+
+  @doc """
+  Recebe a lista de charlistas e adiciona no final de cada uma a quantidade de underlines necessarios para cada linha linha ficar cheia, e se tornar uma matriz completa.
+
+  ## Parametros
+    - Lista: lista com as charlistas, da string separada.
+    - Numero: numero de linhas da matriz.
+    - charlista: lista de caracteres para utilizar o tamanho dela nos calculos dentro da funcao.
+
+  ## Exemplo
+    iex>Cripto.melhora_matriz([[109, 110, 101, 115], [121, 97, 95, 95], [95, 109, 105, 95]], 3, [109, 121, 32, 110, 97, 109, 101, 32, 105, 115])
+    [[109, 110, 101, 115, 95, 95], [121, 97, 95, 95, 95, 95], [95, 109, 105, 95]]
+
+  """
 
   def melhora_matriz(matrizFrase, numberOfRows, frase) do
     nova_matriz = []
