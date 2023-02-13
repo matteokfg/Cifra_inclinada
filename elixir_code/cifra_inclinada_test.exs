@@ -24,7 +24,7 @@ defmodule CriptoTest do
   end
 end
 # mix test <- para rodar o teste (cd codigo_elixir)
-# doctest Cripto <- para testar as docstrings
+# doctest DeCripto <- para testar as docstrings
 
 
 #my name is->mnes__ya_____mi
@@ -36,7 +36,7 @@ end
 
 ## Exemplo:
 #noite e dia->ned___o_i___iea___t_
-#Cripto.descriptografa("ned___o_i___iea___t_", 4)
+#DeCripto.descriptografa("ned___o_i___iea___t_", 4)
 #
 # | n | e | d | _ | _ |
 # | _ | o | _ | i | _ |
