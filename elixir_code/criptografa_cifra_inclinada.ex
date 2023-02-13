@@ -7,8 +7,8 @@ defmodule Cripto do
   Substitui todas letras de tal tipo dentro da lista para outro tipo de letra.
 
   ## Parametros
-    - lista: lista de caracteres.
-    - letra: tipo que sera substituido. Em forma de unicode.
+    - Lista: lista de caracteres.
+    - Letra: tipo que sera substituido. Em forma de unicode.
     - Letra: tipo que vai substituir. Em forma de unicode.
 
   ## Exemplo
