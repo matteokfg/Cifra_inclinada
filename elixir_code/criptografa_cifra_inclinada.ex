@@ -125,7 +125,7 @@ defmodule Cripto do
                 nova_linha = Enum.concat(i, underlines)                         # concateno a linha da frase com a lista de underlines (no final)
                 nova_matriz ++ nova_linha                                       # adiciono a nova linha na nova matriz, que vai ser retornada pelo if
               else
-                nova_linha= if "_" == List.last(i) do                           # se o ultimo item da linha for underline, retorna nova linha
+                nova_linha= if 95 == List.last(i) do                            # se o ultimo item da linha for underline, retorna nova linha
                               {_valorExcluido, nova_linha} = List.pop_at(i, -1) # exclui o underline no final
                               nova_linha                                        # valor da nova linha que vai ser retornado pelo if
                             else
@@ -138,11 +138,43 @@ defmodule Cripto do
     nova_m
   end
 
+  @doc """
+  E uma funcao que junta todas a funcaoes necessarias para a criptografia da string, e que no final printa na tela a string criptografada.
+
+  ## Parametros
+    - String: string a ser criptografada.
+    - Numero: numero de linhas para criptografia por matriz.
+
+  ## Exemplo
+    iex>Cripto.codeString("my name is", 3)
+
+     -> Parabens conseguiu! Criptografando para: mnes__ya_____mi
+
+  """
+
   def codeString(string, numberOfRows) do
     {matrizFrase, frase} = Cripto.string_p_matrizFrase(string, numberOfRows)
     matriz = Cripto.melhora_matriz(matrizFrase, numberOfRows, frase)
-    IO.puts("\n -> Parabens conseguiu! Criptografando para: #{matriz}\n")       # imprimo na tela a matriz, o IO.puts() ja vai transformar a a charlist em string e varias linha em uma linha
+    IO.puts("\n -> Parabens conseguiu! Criptografando para: #{matriz}\n")       # imprimo na tela a matriz, o IO.puts() ja vai transformar a a charlist em string e varias linhas em uma linha
   end
+
+  @doc """
+  Funcao "main", junta a funcao que criptografa a string, junto com a funcao que valida os parametros.
+
+  ## Parametros
+    - String: string que vai ser criptografada.
+    - Inteiro: numero de linhas para a matriz.
+
+  ## Exemplo
+    iex>Cripto.criptografa("my name is", 3)
+
+     -> Parabens conseguiu! Criptografando para: mnes__ya_____mi
+
+    iex>Cripto.criptografa("my name is5", 3)
+    Algo deu errado
+    :false
+
+  """
 
   def criptografa(string, numberOfRows) do
     if Cripto.validate_string(string, numberOfRows) do
