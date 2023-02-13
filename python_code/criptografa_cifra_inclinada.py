@@ -5,7 +5,7 @@ def espacos_por_underline(string):
             string[v] = "_"
     return string
 
-def falsos_undelines_String(string, numberOfRows):
+def falsos_underlines_String(string, numberOfRows):
     if (len(string) % numberOfRows == 0):
         booleano = True
     else:
