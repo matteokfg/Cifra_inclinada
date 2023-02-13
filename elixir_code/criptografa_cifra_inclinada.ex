@@ -52,7 +52,7 @@ defmodule Cripto do
     - String: string crptografada.
     - Numero: numero de linhas.
 
-  ## Exemplo
+  ## Exemplos
 
     iex>Cripto.validate_string("my name is", 3)
     :true
@@ -85,6 +85,7 @@ defmodule Cripto do
     - Numero: numero de linhas.
 
   ## Exemplo
+
     iex>Cripto.string_p_matrizFrase("my name is", 3)
     {[[109, 110, 101, 115], [121, 97, 95, 95], [95, 109, 105, 95]], [109, 121, 32, 110, 97, 109, 101, 32, 105, 115]}
 
@@ -109,6 +110,7 @@ defmodule Cripto do
     - charlista: lista de caracteres para utilizar o tamanho dela nos calculos dentro da funcao.
 
   ## Exemplo
+
     iex>Cripto.melhora_matriz([[109, 110, 101, 115], [121, 97, 95, 95], [95, 109, 105, 95]], 3, [109, 121, 32, 110, 97, 109, 101, 32, 105, 115])
     [[109, 110, 101, 115, 95, 95], [121, 97, 95, 95, 95, 95], [95, 109, 105, 95]]
 
@@ -146,6 +148,7 @@ defmodule Cripto do
     - Numero: numero de linhas para criptografia por matriz.
 
   ## Exemplo
+
     iex>Cripto.codeString("my name is", 3)
 
      -> Parabens conseguiu! Criptografando para: mnes__ya_____mi
@@ -165,7 +168,8 @@ defmodule Cripto do
     - String: string que vai ser criptografada.
     - Inteiro: numero de linhas para a matriz.
 
-  ## Exemplo
+  ## Exemplos
+
     iex>Cripto.criptografa("my name is", 3)
 
      -> Parabens conseguiu! Criptografando para: mnes__ya_____mi
