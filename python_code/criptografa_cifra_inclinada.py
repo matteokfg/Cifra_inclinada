@@ -55,7 +55,7 @@ def encoding_String(string, numberOfRows):
     numberOfRows -- inteiro, numero de linhas da matriz, sera utilizado para a criptografia.
 
     Retorna/Mostra no console:
-    string -- frase crptografada.
+    string -- frase criptografada.
     """
 
     #------------ preparo a string / vira uma lista -----------------------
@@ -95,7 +95,7 @@ def encode_String(string, numberOfRows):
     numberOfRows -- inteiro, numero de linhas da matriz, sera utilizado para a criptografia.
 
     Retorna/Mostra no console:
-    string -- frase crptografada.
+    string -- frase criptografada.
     """
 
     if validate_String(string, numberOfRows):
