@@ -1,4 +1,14 @@
 def validate_decodeString(encodedString, numberOfRows):
+    """Verifica se os parametros passados sao validos.
+
+    Parametros:
+    string -- frase.
+    numberOfRows -- numero inteiro, que representa numero de linhas da matriz.
+
+    Retorna:
+    bool - se forem validos, True. Se nao forem, False.
+    """
+
     if (numberOfRows >= 1 and numberOfRows <= 2*(10**3)) and (len(encodedString) >= 1 and len(encodedString) <= 2*(10**6)) and (len(encodedString) % numberOfRows == 0):
         if encodedString.isalpha() or '_' in encodedString:
             return True
@@ -9,6 +19,16 @@ def validate_decodeString(encodedString, numberOfRows):
         return False
 
 def decodeString(encodedString, numberOfRows):
+    """Faz a descriptografia em si.
+
+    Parametros:
+    string -- frase a ser descriptografada.
+    numberOfRows -- inteiro, numero de linhas da matriz, sera utilizado para a descriptografia.
+
+    Retorna/Mostra no console:
+    string -- frase descriptografada.
+    """
+
     matriz = [["_" for i in range(int(len(encodedString)/numberOfRows))] for i in range(numberOfRows)]
 
     contador = 0
@@ -32,5 +52,15 @@ def decodeString(encodedString, numberOfRows):
     print()
 
 def descriptografa(encodedString, numberOfRows):
+    """Funcao Main. Junta as funcoes de validacao e de descriptografia.
+
+    Parametros:
+    string -- frase a ser descriptografada.
+    numberOfRows -- inteiro, numero de linhas da matriz, sera utilizado para a descriptografia.
+
+    Retorna/Mostra no console:
+    string -- frase descriptografada.
+    """
+
     if validate_decodeString(encodedString, numberOfRows):
         decodeString(encodedString, numberOfRows)
