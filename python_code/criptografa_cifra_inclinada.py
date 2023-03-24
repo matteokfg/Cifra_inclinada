@@ -1,4 +1,6 @@
 def espacos_por_underline(string):
+    """Substitui os espacos por underlines."""
+
     string = list(string)
     for v, i in enumerate(string):
         if i == " ":
@@ -6,6 +8,17 @@ def espacos_por_underline(string):
     return string
 
 def falsos_underlines_String(string, numberOfRows):
+    """Adiciona os falsos underlines na string.
+
+    Parametros:
+    string -- frase que vai ser modificada com underlines extras, que nao estavam na inicial.
+    numberOfRows -- inteiro com a quantidade de linhas.
+
+    Retorna:
+    string -- frase modificada.
+    bool -- se for necessario modificar, sera False. Se nao foi, True.
+    """
+
     if (len(string) % numberOfRows == 0):
         booleano = True
     else:
@@ -15,6 +28,16 @@ def falsos_underlines_String(string, numberOfRows):
     return string, booleano
 
 def validate_String(string, numberOfRows):
+    """Verifica se os parametros passados sao validos.
+
+    Parametros:
+    string -- frase.
+    numberOfRows -- numero inteiro, que representa numero de linhas da matriz.
+
+    Retorna:
+    bool - se forem validos, True. Se nao forem, False.
+    """
+
     if (numberOfRows >= 1 and numberOfRows <= 2*(10**3)) and (len(string) >= 1 and len(string) <= 2*(10**6)):
         if string.isalpha() or ' ' in string:
             return True
@@ -25,6 +48,16 @@ def validate_String(string, numberOfRows):
         return False
 
 def encoding_String(string, numberOfRows):
+    """Faz a criptografia em si, ate mesmo utilizando outras funcoes.
+
+    Parametros:
+    string -- frase a ser criptografada.
+    numberOfRows -- inteiro, numero de linhas da matriz, sera utilizado para a criptografia.
+
+    Retorna/Mostra no console:
+    string -- frase crptografada.
+    """
+
     #------------ preparo a string / vira uma lista -----------------------
     new_String = espacos_por_underline(string)                                            # substituo o valor dos espacos por underlines
     new_String, string_verdadeira = falsos_underlines_String(new_String, numberOfRows)    # garanto que a string tenha uma tamanho divisivel pelo numero de linhas, por se precisar colocar no final dela quantos underlines forem necessarios
@@ -55,5 +88,15 @@ def encoding_String(string, numberOfRows):
     print()
 
 def encode_String(string, numberOfRows):
+    """Funcao Main. Junta as funcoes de validacao e de criptografia.
+
+    Parametros:
+    string -- frase a ser criptografada.
+    numberOfRows -- inteiro, numero de linhas da matriz, sera utilizado para a criptografia.
+
+    Retorna/Mostra no console:
+    string -- frase crptografada.
+    """
+
     if validate_String(string, numberOfRows):
         encoding_String(string, numberOfRows)
