@@ -1,6 +1,7 @@
 class DeCripto:
-    """Classe de descriptografia por cifra inclinada. 
-        -> Metodo: DeCripto.descriptografa(encodedString, numberOfRows)
+    """Classe de descriptografia por cifra inclinada.
+        -> Instanciar: deCripto = DeCripto("criptocaracter")
+        -> Metodo: deCripto.descriptografa(encodedString, numberOfRows)
 
     encodedDtring - frase a ser descriptografada.
     numberOfRows - numero inteiro para descriptografia, representa o numero de linhas que a matriz tinha e vai ter.
