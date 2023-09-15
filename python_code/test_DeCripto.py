@@ -1,43 +1,39 @@
 import timeit
 
+setup = """
+from DeCripto import DeCripto
+deCripto = DeCripto("_")
+"""
+
+print("Teste 1 - Frase curta")
+
 statement = """
 deCripto.descriptografa("mnes__ya_____mi", 3)
 """
-setup = """
-from cifra_inclinada import DeCripto
-deCripto = DeCripto("_")
-"""
 tempo = timeit.timeit(statement, setup, number=10) / 10
 
-print("Teste 1 - Frase curta")
 print(f"\n {tempo} segundos")
 
 print()
+
+print("Teste 2 - Frase longa")
 
 statement = """
 deCripto.descriptografa("nhrols_inpaoossnsmmo____aaare_adaarrn_icaeos____ov_bts_aos__gelistre_____eboaev__spla_eo_afs", 4)
 """
-setup = """
-from cifra_inclinada import DeCripto
-deCripto = DeCripto("_")
-"""
 tempo = timeit.timeit(statement, setup, number=10) / 10
 
-print("Teste 2 - Frase longa")
 print(f"\n {tempo} segundos")
 
 print()
 
+print("Teste 3 - Frase muito longa")
+
 statement = """
 deCripto.descriptografa("pihsr_aupigemo_e__iosepazvesdapm______amoatoseosa__rmssda_unateo_ierr_______r_roas_nr_ssaaa_eossftrirnqn__ev______aaa_s_po_l_essiqjs_aieas_tutes_o_______ssc_desmoqj__oua_nocs_faaeosecc______m__ueiq_anuaheremda_i_sa_d__tmoe", 6)
 """
-setup = """
-from cifra_inclinada import DeCripto
-deCripto = DeCripto("_")
-"""
 tempo = timeit.timeit(statement, setup, number=10) / 10
 
-print("Teste 3 - Frase muito longa")
 print(f"\n {tempo} segundos")
 
 
