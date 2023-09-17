@@ -87,36 +87,41 @@ defmodule Cripto do
   ## Exemplo
 
     iex>Cripto.string_p_matrizFrase("my name is", 3)
-    {[[109, 110, 101, 115], [121, 97, 95, 95], [95, 109, 105, 95]], [109, 121, 32, 110, 97, 109, 101, 32, 105, 115]}
+    {[109, 121, 32, 110, 97, 109, 101, 32, 105, 115], [[109, 110, 101, 115], [121, 97, 95, 95], [95, 109, 105, 95]]}
 
   """
 
   def string_p_matrizFrase(string, numberOfRows) do
     #---------- preparo a string ----------------------
-    frase = String.to_charlist(string)                                          # transforma a string em uma lista de caracteres (char)
-    frase_c_underline = Cripto.replace_all(frase, 32, 95)                       # substitui os espacos por underlines
-    #--------- preparo a lista da string --------------
-    frase_modificada_em_matriz = Enum.chunk_every(frase_c_underline, numberOfRows, numberOfRows, List.duplicate(95, numberOfRows+1)) # separo a lista em uma lista de listas cada lista com numero de carateres igual ao numero de linhas, no final eh adicionado underlines falsos
-    matrizFrase = Cripto.transpose(frase_modificada_em_matriz)                  # coluna em linha e linha em coluna
-    {matrizFrase, frase}
+    frase = string |> String.to_charlist()                                                  # transforma a string em uma lista de caracteres (char)
+    #---------- retorno uma tupla ---------------------
+    {
+      frase,
+      #--------- preparo a lista da string --------------
+      frase
+      |> Cripto.replace_all( 32, 95)                                                        # substitui os espacos por underlines
+      |> Enum.chunk_every( numberOfRows, numberOfRows, List.duplicate(95, numberOfRows+1))  # separo a lista em uma lista de listas cada lista com numero de carateres igual ao numero de linhas, no final eh adicionado underlines falsos
+      |> Cripto.transpose()                                                                 # coluna em linha e linha em coluna
+    }
   end
 
   @doc """
   Recebe a lista de charlistas e adiciona no final de cada uma a quantidade de underlines necessarios para cada linha linha ficar cheia, e se tornar uma matriz completa.
 
   ## Parametros
-    - Lista: lista com as charlistas, da string separada.
+    - Tupla: com dois valores:
+      -- Charlista: lista de caracteres para utilizar o tamanho dela nos calculos dentro da funcao.
+      -- Lista: lista com as charlistas, da string separada.
     - Numero: numero de linhas da matriz.
-    - charlista: lista de caracteres para utilizar o tamanho dela nos calculos dentro da funcao.
 
   ## Exemplo
 
-    iex>Cripto.melhora_matriz([[109, 110, 101, 115], [121, 97, 95, 95], [95, 109, 105, 95]], 3, [109, 121, 32, 110, 97, 109, 101, 32, 105, 115])
+    iex>Cripto.melhora_matriz({[109, 121, 32, 110, 97, 109, 101, 32, 105, 115], [[109, 110, 101, 115], [121, 97, 95, 95], [95, 109, 105, 95]]}, 3)
     [[109, 110, 101, 115, 95, 95], [121, 97, 95, 95, 95, 95], [95, 109, 105, 95]]
 
   """
 
-  def melhora_matriz(matrizFrase, numberOfRows, frase) do
+  def melhora_matriz({frase, matrizFrase}, numberOfRows) do
     nova_matriz = []
 
     nova_m = for i <- matrizFrase do                                            # retorna uma matriz
@@ -127,7 +132,7 @@ defmodule Cripto do
                 nova_linha = Enum.concat(i, underlines)                         # concateno a linha da frase com a lista de underlines (no final)
                 nova_matriz ++ nova_linha                                       # adiciono a nova linha na nova matriz, que vai ser retornada pelo if
               else
-                nova_linha= if 95 == List.last(i) do                            # se o ultimo item da linha for underline, retorna nova linha
+                nova_linha= if 95 == List.last(i) do                           # se o ultimo item da linha for underline, retorna nova linha
                               {_valorExcluido, nova_linha} = List.pop_at(i, -1) # exclui o underline no final
                               nova_linha                                        # valor da nova linha que vai ser retornado pelo if
                             else
@@ -156,9 +161,8 @@ defmodule Cripto do
   """
 
   def codeString(string, numberOfRows) do
-    {matrizFrase, frase} = Cripto.string_p_matrizFrase(string, numberOfRows)
-    matriz = Cripto.melhora_matriz(matrizFrase, numberOfRows, frase)
-    IO.puts("\n -> Parabens conseguiu! Criptografando para: #{matriz}\n")       # imprimo na tela a matriz, o IO.puts() ja vai transformar a a charlist em string e varias linhas em uma linha
+    matriz = string |> Cripto.string_p_matrizFrase( numberOfRows) |> Cripto.melhora_matriz( numberOfRows)
+    IO.puts("\n -> Parabens conseguiu! Criptografando para: #{matriz}\n")                                 # imprimo na tela a matriz, o IO.puts() ja vai transformar a a charlist em string e varias linhas em uma linha
   end
 
   @doc """
