@@ -74,8 +74,9 @@ defmodule DeCripto do
   """
 
   def popula_matriz(frase, numberOfRows) do
-    frase_s_underline = DeCripto.replace_all(frase, 95, 32) #95 eh o unicode de "_", e 32 eh o unicode de " "
-    Enum.chunk_every(frase_s_underline, div(length(frase), numberOfRows))
+    frase
+    |> DeCripto.replace_all( 95, 32)                        #95 eh o unicode de "_", e 32 eh o unicode de " "
+    |> Enum.chunk_every( div(length(frase), numberOfRows))
   end
 
   @doc """
@@ -94,7 +95,7 @@ defmodule DeCripto do
 
   """
 
-  def read_dig(encodedString, numberOfRows, matriz) do
+  def read_dig(matriz, encodedString, numberOfRows) do
     try do
       for el <- Enum.to_list(0..div(String.length(encodedString), numberOfRows)-2) do
         for i <- Enum.to_list(0..numberOfRows-1) do
@@ -126,9 +127,10 @@ defmodule DeCripto do
   """
 
   def decodeString(encodedString, numberOfRows) do
-    frase = String.to_charlist(encodedString)
-    matriz = DeCripto.popula_matriz(frase, numberOfRows)
-    DeCripto.read_dig(encodedString, numberOfRows, matriz)
+    encodedString
+    |> String.to_charlist()
+    |> DeCripto.popula_matriz( numberOfRows)
+    |> DeCripto.read_dig( encodedString, numberOfRows)
   end
 
   @doc """
