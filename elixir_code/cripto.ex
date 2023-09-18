@@ -124,25 +124,22 @@ defmodule Cripto do
   def melhora_matriz({frase, matrizFrase}, numberOfRows) do
     nova_matriz = []
 
-    nova_m = for i <- matrizFrase do                                            # retorna uma matriz
-              if i != List.last(matrizFrase) do                                 # se alinha nao for a ultima, retorna a nova matriz com nova linha
-                n_colunas = div(length(frase),numberOfRows) + numberOfRows - 1  # quantidade de colunas (nº de underlines mais numero de caracteres, como ultima linha)
-                quant_underlines = n_colunas - length(i) + 1                    # quantidade de undelines por linha
-                underlines = List.duplicate("_", quant_underlines)              # lista com underlines por linha
-                nova_linha = Enum.concat(i, underlines)                         # concateno a linha da frase com a lista de underlines (no final)
-                nova_matriz ++ nova_linha                                       # adiciono a nova linha na nova matriz, que vai ser retornada pelo if
-              else
-                nova_linha= if 95 == List.last(i) do                           # se o ultimo item da linha for underline, retorna nova linha
-                              {_valorExcluido, nova_linha} = List.pop_at(i, -1) # exclui o underline no final
-                              nova_linha                                        # valor da nova linha que vai ser retornado pelo if
-                            else
-                              nova_linha = i                                    # se nao tiver underlinhe no final, a linha interira e a nova linha
-                              nova_linha                                        # valor da nova linha que vai ser retornado pelo if
-                            end
-                nova_matriz ++ nova_linha                                       # adiciono a nova linha na nova matriz, que vai ser retornada pelo if
-              end
-            end
-    nova_m
+    for i <- matrizFrase do                                               # retorna uma matriz
+      nova_matriz ++                                                      # adiciono a nova linha na nova matriz
+      cond do
+        i != List.last(matrizFrase) ->                                    # se alinha nao for a ultima, retorna a nova matriz com nova linha
+          n_colunas = div(length(frase),numberOfRows) + numberOfRows - 1  # quantidade de colunas (nº de underlines mais numero de caracteres, como ultima linha)
+          quant_underlines = n_colunas - length(i) + 1                    # quantidade de undelines por linha
+          underlines = List.duplicate("_", quant_underlines)              # lista com underlines por linha
+          nova_linha = Enum.concat(i, underlines)                         # concateno a linha da frase com a lista de underlines (no final), valor da nova linha que vai ser retornado pela condicao
+
+        List.last(i) == 95 ->                                             # se o ultimo item da linha for underline, retorna nova linha
+          {_valorExcluido, nova_linha} = List.pop_at(i, -1)               # exclui o underline no final
+          nova_linha                                                      # valor da nova linha que vai ser retornado pela condicao
+
+        true -> i                                                         # se nao tiver underlinhe no final, a linha inteira eh a nova linha, sendo retornado pela condicao
+      end
+    end
   end
 
   @doc """
