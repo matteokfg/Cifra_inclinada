@@ -1,23 +1,23 @@
 defmodule DeCriptoTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
 
-  test "descriptografia" do
-    IO.puts("TESTE Descriptografia")
-
+  test "descriptografia - frase pequena" do
     inicio = Time.utc_now()
     DeCripto.descriptografa("mnes__ya_____mi", 3)
     fim = Time.utc_now()
     tempo = Time.diff(fim, inicio, :microsecond)
     IO.puts("#{tempo} microssegundos \n")
+  end
 
-
+  test "descriptografia - frase media" do
     inicio = Time.utc_now()
     DeCripto.descriptografa("nhrols_inpaoossnsmmo____aaare_adaarrn_icaeos____ov_bts_aos__gelistre_____eboaev__spla_eo_afs", 4)
     fim = Time.utc_now()
     tempo = Time.diff(fim, inicio, :microsecond)
     IO.puts("#{tempo} microssegundos \n")
+  end
 
-
+  test "descriptografia - frase grande" do
     inicio = Time.utc_now()
     DeCripto.descriptografa("pihsr_aupigemo_e__iosepazvesdapm______amoatoseosa__rmssda_unateo_ierr_______r_roas_nr_ssaaa_eossftrirnqn__ev______aaa_s_po_l_essiqjs_aieas_tutes_o_______ssc_desmoqj__oua_nocs_faaeosecc______m__ueiq_anuaheremda_i_sa_d__tmoe", 6)
     fim = Time.utc_now()
