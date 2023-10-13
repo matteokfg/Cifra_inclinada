@@ -3,14 +3,8 @@ defmodule Cripto do
   Dentro desse modulo, existem todas as funcoes necessarias para a criptografia utilizanddo matriz inclinada.
   """
 
-  @doc """
-  Retorna o valor 95.
-  """
   defp encoder_unicode(), do: 95
 
-  @doc """
-  Retorna o valor '_'.
-  """
   defp encoder_char(), do: '_'
 
   @doc """
@@ -132,19 +126,19 @@ defmodule Cripto do
   """
   @spec melhora_matriz(tuple(), pos_integer()) :: list(charlist())
   def melhora_matriz({frase, matrizFrase}, numberOfRows) do
-    for i <- matrizFrase do                                               # retorna uma matriz
+    for i <- matrizFrase do                                                # retorna uma matriz
       cond do
-        i != List.last(matrizFrase) ->                                    # se alinha nao for a ultima, retorna a nova matriz com nova linha
-          n_colunas = div(length(frase),numberOfRows) + numberOfRows - 1  # quantidade de colunas (nº de underlines mais numero de caracteres, como ultima linha)
-          quant_underlines = n_colunas - length(i) + 1                    # quantidade de undelines por linha
-          underlines = List.duplicate(encoder_char(), quant_underlines)   # lista com underlines por linha
-          nova_linha = Enum.concat(i, underlines)                         # concateno a linha da frase com a lista de underlines (no final), valor da nova linha que vai ser retornado pela condicao
+        i != List.last(matrizFrase) ->                                     # se alinha nao for a ultima, retorna a nova matriz com nova linha
+          n_colunas = div(length(frase),numberOfRows) + numberOfRows - 1   # quantidade de colunas (nº de underlines mais numero de caracteres, como ultima linha)
+          quant_underlines = n_colunas - length(i) + 1                     # quantidade de undelines por linha
+          underlines = List.duplicate(encoder_unicode(), quant_underlines) # lista com underlines por linha
+          nova_linha = Enum.concat(i, underlines)                          # concateno a linha da frase com a lista de underlines (no final), valor da nova linha que vai ser retornado pela condicao
 
-        List.last(i) == encoder_unicode() ->                              # se o ultimo item da linha for underline, retorna nova linha
-          {_valorExcluido, nova_linha} = List.pop_at(i, -1)               # exclui o underline no final
-          nova_linha                                                      # valor da nova linha que vai ser retornado pela condicao
+        List.last(i) == encoder_unicode() ->                               # se o ultimo item da linha for underline, retorna nova linha
+          {_valorExcluido, nova_linha} = List.pop_at(i, -1)                # exclui o underline no final
+          nova_linha                                                       # valor da nova linha que vai ser retornado pela condicao
 
-        true -> i                                                         # se nao tiver underlinhe no final, a linha inteira eh a nova linha, sendo retornado pela condicao
+        true -> i                                                          # se nao tiver underlinhe no final, a linha inteira eh a nova linha, sendo retornado pela condicao
       end
     end
   end
@@ -163,10 +157,11 @@ defmodule Cripto do
      -> Parabens conseguiu! Criptografando para: mnes__ya_____mi
 
   """
-  @spec codeString(charlist(), pos_integer()) :: none()
+  @spec codeString(charlist(), pos_integer()) :: charlist()
   def codeString(string, numberOfRows) do
     matriz = string |> string_p_matrizFrase( numberOfRows) |> melhora_matriz( numberOfRows)
     IO.puts("\n -> Parabens conseguiu! Criptografando para: #{matriz}\n")                                 # imprimo na tela a matriz, o IO.puts() ja vai transformar a a charlist em string e varias linhas em uma linha
+    matriz |> Enum.concat()                                                                               # retorno o valor da matriz, como uma charlista de unicode  
   end
 
   @doc """
