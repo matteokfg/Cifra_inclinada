@@ -4,6 +4,16 @@ defmodule DeCripto do
   """
 
   @doc """
+  Retorna o valor 95.
+  """
+  defp decoder_unicode(), do: 95
+
+  @doc """
+  Retorna o valor '_'.
+  """
+  defp decoder_char(), do: '_'
+
+  @doc """
   Substitui todas letras de tal tipo dentro da lista para outro tipo de letra.
 
   ## Parametros
@@ -17,7 +27,7 @@ defmodule DeCripto do
     [0,1,44,3,4,5,0,1,44,3,4,5]
 
   """
-
+  @spec replace_all(list(integer()), integer(), integer()) :: list(integer())
   def replace_all(list, from, to) do
     list
     |> Enum.map(fn
@@ -35,18 +45,18 @@ defmodule DeCripto do
 
   ## Exemplo
 
-    iex>DeCripto.validate_decodeString("mnes__ya_____mi", 3)
+    iex>DeCripto.validate_string?("mnes__ya_____mi", 3)
     :true
 
-    iex>DeCripto.validate_decodeString("mnes__y_a_____mi5", 4)
+    iex>DeCripto.validate_string?("mnes__y_a_____mi5", 4)
     Algo deu errado
     :false
 
   """
-
-  def validate_decodeString(encodedString, numberOfRows) do
+  @spec validate_string?(charlist(), pos_integer()) :: atom()
+  def validate_string?(encodedString, numberOfRows) do
     if (numberOfRows >= 1 and numberOfRows <= 2*(:math.pow(10,3))) and (String.length(encodedString) >= 1 and String.length(encodedString) <= 2*(:math.pow(10, 6)) and rem(String.length(encodedString), numberOfRows) == 0) do
-      if String.valid?(encodedString) or String.contains?(encodedString,'_') do
+      if String.valid?(encodedString) or String.contains?(encodedString, decoder_char()) do
         :true
       else
         IO.puts("Algo deu errado")
@@ -67,15 +77,15 @@ defmodule DeCripto do
 
   ## Exemplo
 
-    iex>DeCripto.popula_matriz(["m","n","e","s","_","_","y","a","_","_","_","_","_","m","i"], 3)
+    iex>DeCripto.create_matrix(["m","n","e","s","_","_","y","a","_","_","_","_","_","m","i"], 3)
     [["m","n","e","s"," "],
      [" ","y","a"," "," "],
      [" "," "," ","m","i"]]
   """
-
-  def popula_matriz(frase, numberOfRows) do
+  @spec create_matrix(list(char()), pos_integer()) :: list(list(char()))
+  def create_matrix(frase, numberOfRows) do
     frase
-    |> DeCripto.replace_all( 95, 32)                        #95 eh o unicode de "_", e 32 eh o unicode de " "
+    |> replace_all( decoder_unicode(), 32)                        #95 eh o unicode de "_", e 32 eh o unicode de " "
     |> Enum.chunk_every( div(length(frase), numberOfRows))
   end
 
@@ -89,19 +99,17 @@ defmodule DeCripto do
 
   ## Exemplo
 
-    iex>DeCripto.read_dig("mnes__ya_____mi", 3, [["m","n","e","s","_"],["_","y","a","_","_"],["_","_","_","m","i"]])
+    iex>DeCripto.read_diagonal("mnes__ya_____mi", 3, [["m","n","e","s","_"],["_","y","a","_","_"],["_","_","_","m","i"]])
     my name is
     Parabens, vc conseguiu!
 
   """
-
-  def read_dig(matriz, encodedString, numberOfRows) do
+  @spec read_diagonal(list(list(char())), charlist(), pos_integer()) :: none()
+  def read_diagonal(matriz, encodedString, numberOfRows) do
     try do
       for el <- Enum.to_list(0..div(String.length(encodedString), numberOfRows)-2) do
         for i <- Enum.to_list(0..numberOfRows-1) do
-          posicao = i+el
-          row = Enum.at(matriz, i)
-          elemento = Enum.at(row, posicao)
+          elemento = (Enum.at(matriz, i) |> Enum.at( (i+el)))   # Enum.at(row, posicao)
           IO.write(<<elemento::utf8>>)
         end
       end
@@ -125,16 +133,16 @@ defmodule DeCripto do
     my name is
     Parabens, vc conseguiu!
   """
-
+  @spec decodeString(charlist(), pos_integer()) :: none()
   def decodeString(encodedString, numberOfRows) do
     encodedString
     |> String.to_charlist()
-    |> DeCripto.popula_matriz( numberOfRows)
-    |> DeCripto.read_dig( encodedString, numberOfRows)
+    |> create_matrix( numberOfRows)
+    |> read_diagonal( encodedString, numberOfRows)
   end
 
   @doc """
-    Recebe os parametros, valida eles, por meio da funcao validate_decodeString(), e se passarem chama a funcao decodeString().
+    Recebe os parametros, valida eles, por meio da funcao validate_decodeString?(), e se passarem chama a funcao decodeString().
 
     ## Parametros
       - Lista: lista tendo os caracteres da frase critptografada.
@@ -148,11 +156,12 @@ defmodule DeCripto do
 
       iex>DeCripto.descriptografa("mnes__y_a_____mi5", 4)
       Algo deu errado
+      :false
     """
-
+  @spec descriptografa(charlist(), pos_integer()) :: any()
   def descriptografa(encodedString, numberOfRows) do
-    if DeCripto.validate_decodeString(encodedString, numberOfRows) do
-      DeCripto.decodeString(encodedString, numberOfRows)
+    if validate_string?(encodedString, numberOfRows) do
+      decodeString(encodedString, numberOfRows)
     end
   end
 end
