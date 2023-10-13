@@ -4,6 +4,16 @@ defmodule Cripto do
   """
 
   @doc """
+  Retorna o valor 95.
+  """
+  defp encoder_unicode(), do: 95
+
+  @doc """
+  Retorna o valor '_'.
+  """
+  defp encoder_char(), do: '_'
+
+  @doc """
   Substitui todas letras de tal tipo dentro da lista para outro tipo de letra.
 
   ## Parametros
@@ -17,7 +27,7 @@ defmodule Cripto do
     [0,1,44,3,4,5,0,1,44,3,4,5]
 
   """
-
+  @spec replace_all(list(integer()), integer(), integer()) :: list(integer())
   def replace_all(list, from, to) do
     list
     |> Enum.map(fn
@@ -38,7 +48,7 @@ defmodule Cripto do
     [[1, 3, 5], [2, 4, 6]]
 
   """
-
+  @spec transpose(list(list(integer()))) :: list(list(integer()))
   def transpose(rows) do
     rows
     |> List.zip
@@ -54,18 +64,18 @@ defmodule Cripto do
 
   ## Exemplos
 
-    iex>Cripto.validate_string("my name is", 3)
+    iex>Cripto.validate_string?("my name is", 3)
     :true
 
-    iex>Cripto.validate_string("my name is5", 4)
+    iex>Cripto.validate_string?("my name is5", 4)
     Algo deu errado
     :false
 
   """
-
-  def validate_string(string, numberOfRows) do
+  @spec validate_string?(charlist(), pos_integer()) :: atom()
+  def validate_string?(string, numberOfRows) do
     if (numberOfRows >= 1 and numberOfRows <= 2*(:math.pow(10,3))) and (String.length(string) >= 1 and String.length(string) <= 2*(:math.pow(10, 6))) do
-      if String.valid?(string) or String.contains?(string,'_') do
+      if String.valid?(string) or String.contains?(string, encoder_char()) do
         :true
       else
         IO.puts("Algo deu errado")
@@ -90,7 +100,7 @@ defmodule Cripto do
     {[109, 121, 32, 110, 97, 109, 101, 32, 105, 115], [[109, 110, 101, 115], [121, 97, 95, 95], [95, 109, 105, 95]]}
 
   """
-
+  @spec string_p_matrizFrase(charlist(), pos_integer()) :: tuple()
   def string_p_matrizFrase(string, numberOfRows) do
     #---------- preparo a string ----------------------
     frase = string |> String.to_charlist()                                                  # transforma a string em uma lista de caracteres (char)
@@ -99,9 +109,9 @@ defmodule Cripto do
       frase,
       #--------- preparo a lista da string --------------
       frase
-      |> Cripto.replace_all( 32, 95)                                                        # substitui os espacos por underlines
-      |> Enum.chunk_every( numberOfRows, numberOfRows, List.duplicate(95, numberOfRows+1))  # separo a lista em uma lista de listas cada lista com numero de carateres igual ao numero de linhas, no final eh adicionado underlines falsos
-      |> Cripto.transpose()                                                                 # coluna em linha e linha em coluna
+      |> replace_all( 32, encoder_unicode())                                                                # substitui os espacos por underlines
+      |> Enum.chunk_every( numberOfRows, numberOfRows, List.duplicate(encoder_unicode(), numberOfRows+1))   # separo a lista em uma lista de listas cada lista com numero de carateres igual ao numero de linhas, no final eh adicionado underlines falsos
+      |> transpose()                                                                                        # coluna em linha e linha em coluna
     }
   end
 
@@ -120,20 +130,17 @@ defmodule Cripto do
     [[109, 110, 101, 115, 95, 95], [121, 97, 95, 95, 95, 95], [95, 109, 105, 95]]
 
   """
-
+  @spec melhora_matriz(tuple(), pos_integer()) :: list(charlist())
   def melhora_matriz({frase, matrizFrase}, numberOfRows) do
-    nova_matriz = []
-
     for i <- matrizFrase do                                               # retorna uma matriz
-      nova_matriz ++                                                      # adiciono a nova linha na nova matriz
       cond do
         i != List.last(matrizFrase) ->                                    # se alinha nao for a ultima, retorna a nova matriz com nova linha
           n_colunas = div(length(frase),numberOfRows) + numberOfRows - 1  # quantidade de colunas (nº de underlines mais numero de caracteres, como ultima linha)
           quant_underlines = n_colunas - length(i) + 1                    # quantidade de undelines por linha
-          underlines = List.duplicate("_", quant_underlines)              # lista com underlines por linha
+          underlines = List.duplicate(encoder_char(), quant_underlines)   # lista com underlines por linha
           nova_linha = Enum.concat(i, underlines)                         # concateno a linha da frase com a lista de underlines (no final), valor da nova linha que vai ser retornado pela condicao
 
-        List.last(i) == 95 ->                                             # se o ultimo item da linha for underline, retorna nova linha
+        List.last(i) == encoder_unicode() ->                              # se o ultimo item da linha for underline, retorna nova linha
           {_valorExcluido, nova_linha} = List.pop_at(i, -1)               # exclui o underline no final
           nova_linha                                                      # valor da nova linha que vai ser retornado pela condicao
 
@@ -156,9 +163,9 @@ defmodule Cripto do
      -> Parabens conseguiu! Criptografando para: mnes__ya_____mi
 
   """
-
+  @spec codeString(charlist(), pos_integer()) :: none()
   def codeString(string, numberOfRows) do
-    matriz = string |> Cripto.string_p_matrizFrase( numberOfRows) |> Cripto.melhora_matriz( numberOfRows)
+    matriz = string |> string_p_matrizFrase( numberOfRows) |> melhora_matriz( numberOfRows)
     IO.puts("\n -> Parabens conseguiu! Criptografando para: #{matriz}\n")                                 # imprimo na tela a matriz, o IO.puts() ja vai transformar a a charlist em string e varias linhas em uma linha
   end
 
@@ -180,10 +187,10 @@ defmodule Cripto do
     :false
 
   """
-
+  @spec criptografa(charlist(), pos_integer()) :: any()
   def criptografa(string, numberOfRows) do
-    if Cripto.validate_string(string, numberOfRows) do
-      Cripto.codeString(string, numberOfRows)
+    if validate_string?(string, numberOfRows) do
+      codeString(string, numberOfRows)
     end
   end
 end
