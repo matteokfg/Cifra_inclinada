@@ -150,7 +150,7 @@ defmodule DeCripto do
       iex>DeCripto.descriptografa("mnes__y_a_____mi5", 4)
       Algo deu errado
       :false
-    """
+  """
   @spec descriptografa(charlist(), pos_integer()) :: any()
   def descriptografa(encodedString, numberOfRows) do
     if validate_string?(encodedString, numberOfRows) do
