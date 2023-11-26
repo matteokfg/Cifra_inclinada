@@ -3,9 +3,8 @@ defmodule Cripto do
   Dentro desse modulo, existem todas as funcoes necessarias para a criptografia utilizanddo matriz inclinada.
   """
 
-  defp encoder_unicode(), do: 95
-
-  defp encoder_char(), do: '_'
+  @encoder_unicode 95
+  @encoder_char '_'
 
   @doc """
   Substitui todas letras de tal tipo dentro da lista para outro tipo de letra.
@@ -69,7 +68,7 @@ defmodule Cripto do
   @spec validate_string?(charlist(), pos_integer()) :: atom()
   def validate_string?(string, numberOfRows) do
     if (numberOfRows >= 1 and numberOfRows <= 2*(:math.pow(10,3))) and (String.length(string) >= 1 and String.length(string) <= 2*(:math.pow(10, 6))) do
-      if String.valid?(string) or String.contains?(string, encoder_char()) do
+      if String.valid?(string) or String.contains?(string, @encoder_char) do
         :true
       else
         IO.puts("Algo deu errado")
@@ -103,8 +102,8 @@ defmodule Cripto do
       frase,
       #--------- preparo a lista da string --------------
       frase
-      |> replace_all( 32, encoder_unicode())                                                                # substitui os espacos por underlines
-      |> Enum.chunk_every( numberOfRows, numberOfRows, List.duplicate(encoder_unicode(), numberOfRows+1))   # separo a lista em uma lista de listas cada lista com numero de carateres igual ao numero de linhas, no final eh adicionado underlines falsos
+      |> replace_all( 32, @encoder_unicode)                                                                # substitui os espacos por underlines
+      |> Enum.chunk_every( numberOfRows, numberOfRows, List.duplicate(@encoder_unicode, numberOfRows+1))   # separo a lista em uma lista de listas cada lista com numero de carateres igual ao numero de linhas, no final eh adicionado underlines falsos
       |> transpose()                                                                                        # coluna em linha e linha em coluna
     }
   end
@@ -131,10 +130,10 @@ defmodule Cripto do
         i != List.last(matrizFrase) ->                                     # se alinha nao for a ultima, retorna a nova matriz com nova linha
           n_colunas = div(length(frase),numberOfRows) + numberOfRows - 1   # quantidade de colunas (nº de underlines mais numero de caracteres, como ultima linha)
           quant_underlines = n_colunas - length(i) + 1                     # quantidade de undelines por linha
-          underlines = List.duplicate(encoder_unicode(), quant_underlines) # lista com underlines por linha
+          underlines = List.duplicate(@encoder_unicode, quant_underlines) # lista com underlines por linha
           nova_linha = Enum.concat(i, underlines)                          # concateno a linha da frase com a lista de underlines (no final), valor da nova linha que vai ser retornado pela condicao
 
-        List.last(i) == encoder_unicode() ->                               # se o ultimo item da linha for underline, retorna nova linha
+        List.last(i) == @encoder_unicode ->                               # se o ultimo item da linha for underline, retorna nova linha
           {_valorExcluido, nova_linha} = List.pop_at(i, -1)                # exclui o underline no final
           nova_linha                                                       # valor da nova linha que vai ser retornado pela condicao
 
@@ -161,7 +160,7 @@ defmodule Cripto do
   def codeString(string, numberOfRows) do
     matriz = string |> string_p_matrizFrase( numberOfRows) |> melhora_matriz( numberOfRows)
     IO.puts("\n -> Parabens conseguiu! Criptografando para: #{matriz}\n")                                 # imprimo na tela a matriz, o IO.puts() ja vai transformar a a charlist em string e varias linhas em uma linha
-    matriz |> Enum.concat()                                                                               # retorno o valor da matriz, como uma charlista de unicode  
+    matriz |> Enum.concat()                                                                               # retorno o valor da matriz, como uma charlista de unicode
   end
 
   @doc """
