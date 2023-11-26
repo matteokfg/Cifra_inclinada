@@ -3,15 +3,8 @@ defmodule DeCripto do
   Dentro desse modulo, existem todas as funcoes necessarias para a quebra da criptografia, utilizanddo matriz inclinada.
   """
 
-  @doc """
-  Retorna o valor 95.
-  """
-  defp decoder_unicode(), do: 95
-
-  @doc """
-  Retorna o valor '_'.
-  """
-  defp decoder_char(), do: '_'
+  @decoder_unicode 95
+  @decoder_char '_'
 
   @doc """
   Substitui todas letras de tal tipo dentro da lista para outro tipo de letra.
@@ -56,7 +49,7 @@ defmodule DeCripto do
   @spec validate_string?(charlist(), pos_integer()) :: atom()
   def validate_string?(encodedString, numberOfRows) do
     if (numberOfRows >= 1 and numberOfRows <= 2*(:math.pow(10,3))) and (String.length(encodedString) >= 1 and String.length(encodedString) <= 2*(:math.pow(10, 6)) and rem(String.length(encodedString), numberOfRows) == 0) do
-      if String.valid?(encodedString) or String.contains?(encodedString, decoder_char()) do
+      if String.valid?(encodedString) or String.contains?(encodedString, @decoder_char) do
         :true
       else
         IO.puts("Algo deu errado")
@@ -85,7 +78,7 @@ defmodule DeCripto do
   @spec create_matrix(list(char()), pos_integer()) :: list(list(char()))
   def create_matrix(frase, numberOfRows) do
     frase
-    |> replace_all( decoder_unicode(), 32)                        #95 eh o unicode de "_", e 32 eh o unicode de " "
+    |> replace_all( @decoder_unicode, 32)                        #95 eh o unicode de "_", e 32 eh o unicode de " "
     |> Enum.chunk_every( div(length(frase), numberOfRows))
   end
 
